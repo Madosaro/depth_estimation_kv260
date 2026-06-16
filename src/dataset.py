@@ -6,7 +6,8 @@ import torch
 import torchvision.transforms as tf
 import pandas as pd
 import numpy as np
-import PIL as im
+
+from PIL import Image
 
 from torch.utils.data import Dataset
 
@@ -27,14 +28,14 @@ class Nyudepth_png(Dataset):
     def __len__(self):
         return len(self.dataframe)
     
-    def __getitem__(self, index):
+    def __getitem__(self, index:int):
         
         #--- retrieve the files paths and image files   
         rgb_file_path = os.path.join(self.dataset_path, self.dataframe['rgb'].iloc[index])
-        dep_file_path = os.path.join(self.dataset_path, self.dataframe['dep'].iloc[index])
+        dep_file_path = os.path.join(self.dataset_path, self.dataframe['depth'].iloc[index])
 
-        rgb_img = im.open(rgb_file_path).convert('RGB')
-        dep_img = im.open(dep_file_path)
+        rgb_img = Image.open(rgb_file_path).convert('RGB')
+        dep_img = Image.open(dep_file_path)
 
         #--- resize the data for DPU
         rgb_data = cv2.resize(np.array(rgb_img, dtype=np.float32), (224, 224))
