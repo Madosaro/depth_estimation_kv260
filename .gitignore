@@ -1,2 +1,4 @@
 rapport/
+models/
 .vscode/
+*.pyc
