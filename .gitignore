@@ -2,3 +2,4 @@ rapport/
 models/
 .vscode/
 *.pyc
+outputs/
