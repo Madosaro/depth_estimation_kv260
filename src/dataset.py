@@ -18,8 +18,7 @@ class Nyudepth_png(Dataset):
                  dataset_path:str,
                  dataframe:pd.DataFrame,
                  transform_shape:tf=None,
-                 transform_color:tf=None,
-                 transform_patate:tf=None):
+                 transform_color:tf=None):
         
         self.dataset_path = dataset_path
         self.dataframe = dataframe
