@@ -17,8 +17,9 @@ class Nyudepth_png(Dataset):
     def __init__(self,
                  dataset_path:str,
                  dataframe:pd.DataFrame,
-                 transform_shape:tf,
-                 transform_color:tf):
+                 transform_shape:tf=None,
+                 transform_color:tf=None,
+                 transform_patate:tf=None):
         
         self.dataset_path = dataset_path
         self.dataframe = dataframe
@@ -31,8 +32,8 @@ class Nyudepth_png(Dataset):
     def __getitem__(self, index:int):
         
         #--- retrieve the files paths and image files   
-        rgb_file_path = os.path.join(self.dataset_path, self.dataframe['rgb'].iloc[index])
-        dep_file_path = os.path.join(self.dataset_path, self.dataframe['depth'].iloc[index])
+        rgb_file_path = self.dataframe['rgb'].iloc[index]
+        dep_file_path = self.dataframe['depth'].iloc[index]
 
         rgb_img = Image.open(rgb_file_path).convert('RGB')
         dep_img = Image.open(dep_file_path)
@@ -50,7 +51,7 @@ class Nyudepth_png(Dataset):
             #and we assume captured values for distances varying 
             #between 0.7-10m measured in mm
             #based on the Nyudepth dataset informations
-        dep_data = dep_data/1000.0 #convert in meters
+        dep_data = (dep_data*10)/(2**16 - 1) #convert in meters
         dep_data = np.clip(dep_data, 0.7, 10.0) #clip data outside defined range
         dep_data = (dep_data - 0.7)/(10.0 - 0.7) #normalize data values to the interval [0:1]
         
