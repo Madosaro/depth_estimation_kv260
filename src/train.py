@@ -42,6 +42,7 @@ def train_model(model, train_dataloader, optimizer, loss_function, device, sched
     
     lr = scheduler.get_last_lr() if scheduler is not None else [0]
 
+  
     return (
         sum(losses) / len(losses),
         sum(rmse_list)/len(rmse_list),
@@ -64,7 +65,7 @@ def validate_model(model, val_dataloader, loss_function, device, w1, w2, w3, w4)
             if torch.isnan(labels - outputs).any():
                 continue
 
-            loss = loss_function(labels, outputs, w1, w2, w3, w4)
+            loss = loss_function(outputs, labels, w1, w2, w3, w4)
             losses.append(loss.detach().item())
 
             true_depth = labels * (10.0 - 0.7) + 0.7
@@ -149,7 +150,7 @@ def train(dataset_path:str, epochs:int, num_imgs:int, model_path:str):
     loss_train, loss_val = [], []
     rmse_train, rmse_val = [], []
     lr_history = []
-    w1, w2, w3, w4 = 1, 1, 1, 1
+    w1, w2, w3, w4 = 1, 2, 1, 1
 
     #--- optimizer declaration
     optimizer = torch.optim.AdamW(model.parameters(), lr=0.0001)
