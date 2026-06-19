@@ -1,5 +1,8 @@
 rapport/
 models/
 .vscode/
-*.pyc
+__pycache__/
 outputs/
+dataset/
+.ipynb_checkpoints/
+build/
