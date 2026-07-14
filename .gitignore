@@ -6,3 +6,4 @@ outputs/
 dataset/
 .ipynb_checkpoints/
 build/
+ignore/
