@@ -1,0 +1,7 @@
+[0;31m[UNILOG][FATAL][XCOM_FILE_NOT_EXISTS][The file is not exists] "/workspace/./models/MDE_UNET/build_1.4/quant_model/UNet_int.xmodel" doesn't exist.
+[m*** Check failure stack trace: ***
+This program has crashed!
+Aborted (core dumped)
+**************************************************
+* VITIS_AI Compilation - Xilinx Inc.
+**************************************************
