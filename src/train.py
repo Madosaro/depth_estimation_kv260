@@ -88,23 +88,6 @@ def validate_model(model, val_dataloader, loss_function, device, w1, w2, w3, w4)
 
 def train(dataset_path: str, epochs: int, num_imgs: int, model_name: str,
           resume_epoch: int = None, checkpoint_every: int = 5):
-    """
-    Train the MDE UNet model.
-
-    Args:
-        dataset_path: path to the dataset root.
-        epochs: number of additional epochs to train for this run.
-        num_imgs: max number of image pairs to sample from the dataframe.
-        model_name: name used for the model directory / files.
-        resume_epoch: optional epoch number to resume from. If given, looks for
-            "./models/<model_name>/checkpoints/<model_name>_epoch<resume_epoch>.pth".
-            Raises FileNotFoundError if that snapshot doesn't exist.
-        checkpoint_every: save a permanent, non-overwritten snapshot every N epochs.
-
-    If resume_epoch is not given, resumes from the "latest" checkpoint if it
-    exists, else trains from scratch.
-    """
-
     print("Starting training...\n")
     #--- get the dataframe
     print(f'\t|- ', end="")

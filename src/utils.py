@@ -13,23 +13,6 @@ from scipy.ndimage import uniform_filter
 
 
 def get_dataframe(dataset_path: str, split: str) -> pd.DataFrame:
-    """
-    Build a shuffled dataframe of matched RGB/depth file pairs for a dataset split.
-
-    Recursively searches `dataset_path/split` for files named `rgb_*.png` and
-    `depth_*.png`, pairs them by sorted order, and asserts the counts match.
-
-    Args:
-        dataset_path: root path of the dataset.
-        split: subfolder name to search (e.g. "train", "val", "test").
-
-    Returns:
-        DataFrame with columns "rgb" and "depth" (matched file paths),
-        shuffled with a fixed random_state for reproducibility.
-
-    Raises:
-        AssertionError: if the number of rgb and depth files differ.
-    """
     path = os.path.join(dataset_path, split)
     rgb_files = sorted(
         glob.glob(os.path.join(path, "**", "rgb_*.png"), recursive=True)
@@ -54,25 +37,6 @@ def predict(
     min_depth: float = 0.7,
     max_depth: float = 10.0,
 ) -> np.ndarray:
-    """
-    Run inference on a single image (or batch) and denormalize the output to metric depth.
-
-    Args:
-        img: input tensor, shape (C, H, W) for a single image or (N, C, H, W)
-            for a batch. Must already be a torch.Tensor (e.g. via
-            torchvision.transforms.ToTensor()).
-        model: trained depth model, output expected in normalized [0, 1] range.
-        device: device to run inference on.
-        min_depth: minimum metric depth (meters) used to denormalize the output.
-        max_depth: maximum metric depth (meters) used to denormalize the output.
-
-    Returns:
-        Predicted depth map(s) in meters, as a numpy array, clipped to
-        [min_depth, max_depth].
-
-    Raises:
-        TypeError: if `img` is not a torch.Tensor.
-    """
     model.eval()
     if not isinstance(img, torch.Tensor):
         raise TypeError("Input image must be a torch.Tensor. Use torchvision.transforms.ToTensor()(img) first.")
@@ -89,7 +53,6 @@ def predict(
 
 
 
-#--- 1. build model, optimizer, scheduler -----------------------------------
 def build_model(model_class, device):
     print(f'\t|- Model :')
     return model_class().to(device)
@@ -104,7 +67,6 @@ def build_scheduler(optimizer, scheduler_kwargs=None):
     return torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, **scheduler_kwargs)
 
 
-#--- 2. paths -----------------------------------------------------------------
 def get_model_paths(model_name, models_root="./models/"):
     model_dir_path = os.path.join(models_root, model_name)
     checkpoints_dir_path = os.path.join(model_dir_path, "checkpoints")
@@ -123,7 +85,6 @@ def get_model_paths(model_name, models_root="./models/"):
 
 
 def resolve_checkpoint_path(model_name, checkpoints_dir_path, resume_epoch):
-    """Resolve a resume_epoch to a specific checkpoint file path. Raises if missing."""
     candidate_path = os.path.join(checkpoints_dir_path, f"{model_name}_epoch{resume_epoch}.pth")
     if not os.path.exists(candidate_path):
         available = sorted(f for f in os.listdir(checkpoints_dir_path) if f.endswith(".pth"))
@@ -134,9 +95,7 @@ def resolve_checkpoint_path(model_name, checkpoints_dir_path, resume_epoch):
     return candidate_path
 
 
-#--- 3. checkpoint loading ----------------------------------------------------
 def load_checkpoint_file(load_path, device):
-    """Just reads the .pth file off disk. Returns None if it doesn't exist."""
     if not os.path.exists(load_path):
         print(f"\t|\t|- No existing checkpoint found at '{load_path}'. Training from scratch.")
         return None
@@ -170,7 +129,6 @@ def apply_training_state(model, optimizer, scheduler, checkpoint):
         return 0
 
 
-#--- 4. history ----------------------------------------------------------------
 HISTORY_KEYS = ["loss_train", "loss_val", "MAE_train", "MAE_val",
                 "MSE_train", "MSE_val", "Edge_train", "Edge_val",
                 "SSIM_train", "SSIM_val", "lr", "epoch_time"]
@@ -246,11 +204,9 @@ def load_for_eval(model_class, model_name, device, models_root="./models/"):
 
 
 def compute_ssim_numpy(img1, img2, data_range=1.0):
-    # Constantes de stabilité de la formule SSIM
     C1 = (0.01 * data_range) ** 2
     C2 = (0.03 * data_range) ** 2
 
-    # Moyennes locales (fenêtre par défaut de 7x7)
     ndimage_kwargs = {'size': 7, 'mode': 'reflect'}
     mu1 = uniform_filter(img1, **ndimage_kwargs)
     mu2 = uniform_filter(img2, **ndimage_kwargs)
@@ -259,13 +215,10 @@ def compute_ssim_numpy(img1, img2, data_range=1.0):
     mu2_sq = mu2 ** 2
     mu1_mu2 = mu1 * mu2
 
-    # Variances et covariances locales
     sigma1_sq = uniform_filter(img1 ** 2, **ndimage_kwargs) - mu1_sq
     sigma2_sq = uniform_filter(img2 ** 2, **ndimage_kwargs) - mu2_sq
     sigma12 = uniform_filter(img1 * img2, **ndimage_kwargs) - mu1_mu2
 
-    # Formule de la SSIM
     ssim_map = ((2 * mu1_mu2 + C1) * (2 * sigma12 + C2)) / ((mu1_sq + mu2_sq + C1) * (sigma1_sq + sigma2_sq + C2))
 
-    # On renvoie la moyenne globale
     return np.mean(ssim_map)

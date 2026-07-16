@@ -17,7 +17,6 @@ class MDELoss(nn.Module):
         return g2d
 
     def _native_ssim(self, y_pred, y_true, mask):
-        # Calcul du SSIM standardisé (Data range = 1.0 car normalisé [0:1])
         C1, C2 = 0.01**2, 0.02**2
         channels = y_pred.shape[1]
         kernel = self.kernel.expand(channels, 1, -1, -1)
