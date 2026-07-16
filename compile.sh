@@ -17,7 +17,7 @@
 # Author: Mark Harvey, Xilinx Inc
 
 if [ $1 = kv260 ]; then
-      ARCH=./arch.json
+      ARCH=./arch_$2.json
       TARGET=kv260
       echo "-----------------------------------------"
       echo "COMPILING MODEL FOR KV260.."
@@ -33,7 +33,7 @@ QUANT_MODEL_PATH=${BUILD_DIR}/quant_model/UNet_int.xmodel
 
 COMPILED_DIR=${BUILD_DIR}/compiled_model
 
-mkdir p ${COMPILED_DIR}
+mkdir -p ${COMPILED_DIR}
     
 
 compile() {
