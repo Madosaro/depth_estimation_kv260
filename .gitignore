@@ -1,7 +1,6 @@
 rapport/
 .vscode/
 __pycache__/
-outputs/
 dataset/
 .ipynb_checkpoints/
 ignore/
