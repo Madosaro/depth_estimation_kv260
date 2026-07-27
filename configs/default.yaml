@@ -1,0 +1,41 @@
+# configs/default.yaml
+
+model_name: "MDE_UNET"
+vitis_ai_version: 1.4
+
+paths:
+  dataset: "/home/mado/.cache/kagglehub/datasets/awsaf49/nyuv2-official-split-dataset/versions/1"
+  dataset_vitis: "./dataset/nyudepthv2"
+  models: "./models"
+
+training:
+  epochs: 50
+  checkpoint_every: 5
+  num_imgs: 10
+  batch_size: 8
+  lr: 0.0001
+  num_workers: 4
+  split_proportion: 0.8
+  seed: 42
+
+quantization:
+  batch_size: 1                
+  num_workers: 4
+  calibration_samples: 200
+  input_size: [3, 224, 224]
+
+deployment:
+  metrics_file_path: "./models/MDE_UNET/outputs/MDE_UNET_deployement.json"
+
+dpu_input_format:
+  input_size: [3, 224, 224] 
+  min_depth: 0.7
+  max_depth: 10.0
+
+loss_weights:
+  w1: 1.0 #SSIM
+  w2: 1.0 #Edges
+  w3: 1.0 #l1_depth (MAE)
+  w4: 1.0 #l2_depth (MSE)
+
+

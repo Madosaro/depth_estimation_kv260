@@ -1,7 +1,14 @@
-[0;31m[UNILOG][FATAL][XCOM_FILE_NOT_EXISTS][The file is not exists] "/workspace/./models/MDE_UNET/build_1.4/quant_model/UNet_int.xmodel" doesn't exist.
-[m*** Check failure stack trace: ***
-This program has crashed!
-Aborted (core dumped)
+[UNILOG][INFO] Target architecture: DPUCZDX8G_ISA0_B4096_MAX_BG2
+[UNILOG][INFO] Compile mode: dpu
+[UNILOG][INFO] Debug mode: function
+[UNILOG][INFO] Target architecture: DPUCZDX8G_ISA0_B4096_MAX_BG2
+[UNILOG][INFO] Graph name: UNet, with op num: 170
+[UNILOG][INFO] Begin to compile...
+[UNILOG][INFO] Total device subgraph number 3, DPU subgraph number 1
+[UNILOG][INFO] Compile done.
+[UNILOG][INFO] The meta json is saved to "/workspace/./models/MDE_UNET/build_1.4/compiled_model/meta.json"
+[UNILOG][INFO] The compiled xmodel is saved to "/workspace/./models/MDE_UNET/build_1.4/compiled_model/CNN_kv260.xmodel"
+[UNILOG][INFO] The compiled xmodel's md5sum is 0785daeee9ddd72b36b75304882431b7, and has been saved to "/workspace/./models/MDE_UNET/build_1.4/compiled_model/md5sum.txt"
 **************************************************
 * VITIS_AI Compilation - Xilinx Inc.
 **************************************************

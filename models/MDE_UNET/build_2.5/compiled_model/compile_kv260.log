@@ -1,0 +1,13 @@
+[UNILOG][INFO] Compile mode: dpu
+[UNILOG][INFO] Debug mode: function
+[UNILOG][INFO] Target architecture: DPUCZDX8G_ISA1_B4096
+[UNILOG][INFO] Graph name: UNet, with op num: 170
+[UNILOG][INFO] Begin to compile...
+[UNILOG][INFO] Total device subgraph number 3, DPU subgraph number 1
+[UNILOG][INFO] Compile done.
+[UNILOG][INFO] The meta json is saved to "/workspace/./models/MDE_UNET/build_2.5/compiled_model/meta.json"
+[UNILOG][INFO] The compiled xmodel is saved to "/workspace/./models/MDE_UNET/build_2.5/compiled_model/CNN_kv260.xmodel"
+[UNILOG][INFO] The compiled xmodel's md5sum is 87ae3a9d7118bcb5762801d49bd46e49, and has been saved to "/workspace/./models/MDE_UNET/build_2.5/compiled_model/md5sum.txt"
+**************************************************
+* VITIS_AI Compilation - Xilinx Inc.
+**************************************************
