@@ -89,7 +89,7 @@ python3 predict.py --config ./configs/[configuration-file]
 
 ![Comparison between RGB input, ground truth, and predicted depth map](./models/MDE_UNET/outputs/deployment_2.5/visual_results/comparison_idx_10_rgb_00029.png)
 
-To use the model on the Kria board, transfer `./kria_petalinux` or `./kria_ubuntu`, as well as the `./test` split of the dataset containing the image pairs and data used for testing.
+To use the model on the Kria board, update the `.xmodel` in `./kria_petalinux` or `./kria_ubuntu` and transfer the folder as well as the `./test` split of the dataset containing the image pairs and data used for testing.
 
 You can then set up the DPU — we used `kv260-dpu-benchmark` for PetaLinux and `kv260-benchmark-b4096` for Ubuntu. You can check the DPU's compatibility by comparing the target in the `./arch_*.json` file used to compile the model against the output of the `xdputil query` command while a DPU is loaded.
 
