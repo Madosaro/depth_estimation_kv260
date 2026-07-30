@@ -1,6 +1,11 @@
 # KV260 MDE UNET
 
+<<<<<<< HEAD
 A project to train, quantize, compile, and deploy a UNet model for depth estimation on an AMD Xilinx Kria KV260 MPSoC. It is mainly intended for people doing research in the UMons Laboratory. This project relies heavily on previous work done in the laboratory by Nicolás Urbano Pintos (UTN FRH / CITEDEF) and Monal Patel Rakeshbhai (UMONS): https://github.com/nurbano/mde-unet-kv260
+=======
+A project to train, quantize, compile and deploy a UNet model for depth estimation on an AND Xilinx Kria KV260 MPSoC. It is mainly meant for people doing reasearch in the UMons Laboratory. This project rely heavily on previous work done in the laboratory by Nicolás Urbano Pintos (UTN FRH /CITEDEF) and Monal Patel Rakeshbhai (UMONS): https://github.com/nurbano/mde-unet-kv260
+
+>>>>>>> 570c278f08a968a287a11f544e3683008234628d
 
 ## Table of Contents
 
@@ -158,4 +163,8 @@ All run parameters (dataset paths, model settings, Vitis-AI version, training hy
 
 ## License
 
+<<<<<<< HEAD
 This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
+=======
+   This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
+>>>>>>> 570c278f08a968a287a11f544e3683008234628d
